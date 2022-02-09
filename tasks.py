@@ -58,7 +58,7 @@ def workWord1():
 		except IndexError:
 			try:
 				tweet = rds.xautoclaim(f"{WORD_PREFIX}1", "my_group3", "dipen3", 10000, "0-0", 1)[0]
-			except:
+			except IndexError:
 				return f"{WORD_PREFIX}1"
 		p = rds.pipeline()
 		p.xack(f"{WORD_PREFIX}1", "my_group3", tweet[0])
