@@ -18,38 +18,38 @@ rds.xgroup_create(f"{WORD_PREFIX}1", "my_group3", 0)
 
 print("server starts")
 
-while True:
-  job = tasks.workTweet.delay().get()
-  job = tasks.workWord0.delay().get()
-  job = tasks.workWord1.delay().get()
-
-# jobs = []
-# for i in range(8):
-#   job = tasks.workTweet.delay()
-#   jobs.append(job)
-
-# tweet = 8
-# w0, w1 = 0, 0
 # while True:
-#   for i in range(8):
-#     if jobs[i].ready():
-#       id = jobs[i].get()
-#       if id == f"{WORD_PREFIX}0":
-#         w0 = w0 + 1
-#         tweet += 1
-#         jobs[i] = tasks.workTweet.delay()
-#       elif id == f"{WORD_PREFIX}1":
-#         w1 = w1 - 1
-#         tweet = tweet + 1
-#         jobs[i] = tasks.workTweet.delay()
-#       else:
-#         if (w0 == 0 and rds.xlen(f"{WORD_PREFIX}0") > 0) or (w0 != 0 and rds.xlen(f"{WORD_PREFIX}0")/w0 > 1000):
-#           tweet = tweet - 1
-#           w0 = w0 + 1
-#           jobs[i] = tasks.workWord0.delay()
-#         elif (w1 == 0 and rds.xlen(f"{WORD_PREFIX}1") > 0) or (w1 != 0 and rds.xlen(f"{WORD_PREFIX}0")/w1 > 1000):
-#           tweet = tweet - 1
-#           w1 = w1 + 1
-#           jobs[i] = tasks.workWord1.delay()
-#         else:
-#           jobs[i] = tasks.workTweet.delay()
+#   job = tasks.workTweet.delay().get()
+#   job = tasks.workWord0.delay().get()
+#   job = tasks.workWord1.delay().get()
+
+jobs = []
+for i in range(8):
+  job = tasks.workTweet.delay()
+  jobs.append(job)
+
+tweet = 8
+w0, w1 = 0, 0
+while True:
+  for i in range(8):
+    if jobs[i].ready():
+      id = jobs[i].get()
+      if id == f"{WORD_PREFIX}0":
+        w0 = w0 + 1
+        tweet += 1
+        jobs[i] = tasks.workTweet.delay()
+      elif id == f"{WORD_PREFIX}1":
+        w1 = w1 - 1
+        tweet = tweet + 1
+        jobs[i] = tasks.workTweet.delay()
+      else:
+        if (w0 == 0 and rds.xlen(f"{WORD_PREFIX}0") > 0) or (w0 != 0 and rds.xlen(f"{WORD_PREFIX}0")/w0 > 1000):
+          tweet = tweet - 1
+          w0 = w0 + 1
+          jobs[i] = tasks.workWord0.delay()
+        elif (w1 == 0 and rds.xlen(f"{WORD_PREFIX}1") > 0) or (w1 != 0 and rds.xlen(f"{WORD_PREFIX}1")/w1 > 1000):
+          tweet = tweet - 1
+          w1 = w1 + 1
+          jobs[i] = tasks.workWord1.delay()
+        else:
+          jobs[i] = tasks.workTweet.delay()
