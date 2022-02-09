@@ -25,7 +25,7 @@ for filename in abs_files:
 ctr = 0
 while True:
   # print top 10 words
-  print(rds.zrevrangebyscore(WORDSET, '+inf', '-inf', 0, 10, withscores=True))
+  print(f"{rds.zrevrangebyscore(WORDSET, '+inf', '-inf', 0, 10, withscores=True)} {ctr}")
   time.sleep(1)
   ctr = ctr + 1
   if ctr >= 2000:
