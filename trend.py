@@ -7,7 +7,7 @@ if (len(sys.argv) < 2):
 
 DIR=sys.argv[1]
 
-abs_files=sorted([os.path.join(pth, f) for pth, dirs, files in os.walk(DIR) for f in files])[0:100]
+abs_files=[os.path.join(pth, f) for pth, dirs, files in os.walk(DIR) for f in files]
 
 wc = {}
 

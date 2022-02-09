@@ -14,7 +14,7 @@ DIR=sys.argv[1]
 rds.delete(WORDSET)
 rds.zadd(WORDSET, {"foo": 0})
 
-abs_files=sorted([os.path.join(pth, f) for pth, dirs, files in os.walk(DIR) for f in files])[0:100]
+abs_files=[os.path.join(pth, f) for pth, dirs, files in os.walk(DIR) for f in files]
 
 for filename in abs_files:
   with open(filename, mode='r') as f:
@@ -28,5 +28,5 @@ while True:
   print(rds.zrevrangebyscore(WORDSET, '+inf', '-inf', 0, 10, withscores=True))
   time.sleep(1)
   ctr = ctr + 1
-  if ctr >= 1000:
+  if ctr >= 2000:
     break

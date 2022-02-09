@@ -16,12 +16,7 @@ rds.xgroup_create(TWEET, "my_group1", 0)
 rds.xgroup_create(f"{WORD_PREFIX}0", "my_group2", 0)
 rds.xgroup_create(f"{WORD_PREFIX}1", "my_group3", 0)
 
-print("server starts")
-
-# while True:
-#   job = tasks.workTweet.delay().get()
-#   job = tasks.workWord0.delay().get()
-#   job = tasks.workWord1.delay().get()
+print("server is running...")
 
 jobs = []
 for i in range(8):
