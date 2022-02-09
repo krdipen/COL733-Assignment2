@@ -38,11 +38,11 @@ while True:
         tweet = tweet + 1
         jobs[i] = tasks.workTweet.delay()
       else:
-        if (w0 == 0 and rds.xlen(f"{WORD_PREFIX}0") > 0) or (w0 != 0 and rds.xlen(f"{WORD_PREFIX}0")/w0 > 1000):
+        if (w0 == 0 and rds.xlen(f"{WORD_PREFIX}0") > 0) or (w0 != 0 and rds.xlen(f"{WORD_PREFIX}0")/w0 > 10):
           tweet = tweet - 1
           w0 = w0 + 1
           jobs[i] = tasks.workWord0.delay()
-        elif (w1 == 0 and rds.xlen(f"{WORD_PREFIX}1") > 0) or (w1 != 0 and rds.xlen(f"{WORD_PREFIX}1")/w1 > 1000):
+        elif (w1 == 0 and rds.xlen(f"{WORD_PREFIX}1") > 0) or (w1 != 0 and rds.xlen(f"{WORD_PREFIX}1")/w1 > 10):
           tweet = tweet - 1
           w1 = w1 + 1
           jobs[i] = tasks.workWord1.delay()

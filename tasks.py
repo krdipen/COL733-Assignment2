@@ -7,7 +7,7 @@ def workTweet():
 	try:
 		tweets = rds.xreadgroup("my_group1", "dipen1", {TWEET: ">"}, 10000)[0][1]
 	except IndexError:
-		return TWEET
+		tweets = rds.xautoclaim(TWEET, "my_group1", "dipen1", 10000, "0-0", 10000)
 	wc = {}
 	p = rds.pipeline()
 	for tweet in tweets:
@@ -39,7 +39,10 @@ def workWord0():
 		try:
 			tweet = rds.xreadgroup("my_group2", "dipen2", {f"{WORD_PREFIX}0": ">"}, 1)[0][1][0]
 		except IndexError:
-			return f"{WORD_PREFIX}0"
+			try:
+				tweet = rds.xautoclaim(f"{WORD_PREFIX}0", "my_group2", "dipen2", 10000, "0-0", 1)[0]
+			except IndexError:
+				return f"{WORD_PREFIX}0"
 		p = rds.pipeline()
 		p.xack(f"{WORD_PREFIX}0", "my_group2", tweet[0])
 		p.xdel(f"{WORD_PREFIX}0", tweet[0])
@@ -53,7 +56,10 @@ def workWord1():
 		try:
 			tweet = rds.xreadgroup("my_group3", "dipen3", {f"{WORD_PREFIX}1": ">"}, 1)[0][1][0]
 		except IndexError:
-			return f"{WORD_PREFIX}1"
+			try:
+				tweet = rds.xautoclaim(f"{WORD_PREFIX}1", "my_group3", "dipen3", 10000, "0-0", 1)[0]
+			except:
+				return f"{WORD_PREFIX}1"
 		p = rds.pipeline()
 		p.xack(f"{WORD_PREFIX}1", "my_group3", tweet[0])
 		p.xdel(f"{WORD_PREFIX}1", tweet[0])
