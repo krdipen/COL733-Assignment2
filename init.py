@@ -30,7 +30,7 @@ while True:
     if jobs[i].ready():
       id = jobs[i].get()
       if id == f"{WORD_PREFIX}0":
-        w0 = w0 + 1
+        w0 = w0 - 1
         tweet += 1
         jobs[i] = tasks.workTweet.delay()
       elif id == f"{WORD_PREFIX}1":
